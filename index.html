@@ -6,15 +6,17 @@
     <title>Document</title>
 </head>
 <script>
-    var xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function() {
-    if (this.readyState == 4) {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+    if (this.readyState == 4 && request.status === 200) {
        // Typical action to be performed when the document is ready:
       console.log('>>> check res: ' ,xhttp.responseText);
+    } else{
+        console.log('>>> check status: ', request.status)
     }
 };
-xhttp.open("GET", "https://jsonplaceholder.typicode.com/todos/1", true);
-xhttp.send();
+request.open("GET", "https://jsonplaceholder.typicode.com/todoss", true);
+request.send();
 
 </script>
 <body>
