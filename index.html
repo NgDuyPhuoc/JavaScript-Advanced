@@ -6,17 +6,36 @@
     <title>Document</title>
 </head>
 <script>
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-    if (this.readyState == 4 && request.status === 200) {
-       // Typical action to be performed when the document is ready:
-      console.log('>>> check res: ' ,xhttp.responseText);
-    } else{
-        console.log('>>> check status: ', request.status)
+
+const callback = (error, data) => {
+    if(error){
+        console.log('calling callback with error', error, data)
+    } 
+    if(data){
+        console.log('calling callback with data', data)
+    }
+}
+    function getTodos(callback){
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            if (this.readyState === 4 && request.status === 200) {
+               // Typical action to be performed when the document is ready:
+               const data = request.responseText;
+                callback(undefined, data);
+
+            if (this.readyState === 4 && request.status !== 200){
+                callback('something wrongs', undefined);
+            }
     }
 };
-request.open("GET", "https://jsonplaceholder.typicode.com/todoss", true);
-request.send();
+    request.open("GET", "https://jsonplaceholder.typicode.com/todos", true);
+    request.send();
+}
+console.log(1);
+console.log(2);
+getTodos(callback);
+console.log(3);
+console.log(4);
 
 </script>
 <body>
